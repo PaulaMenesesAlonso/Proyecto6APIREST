@@ -1,17 +1,14 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import 'dotenv/config'
-import moviesRouter from './routes/movies.routes.js'
-import directorsRouter from './routes/directors.routes.js'
+import moviesRouter from './API/routes/movies.routes.js'
+import directorsRouter from './API/routes/directors.routes.js'
+import { connectDB } from './config/db.js'
 
 const app = express()
 
 app.use(express.json())
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log('Conectada a Mongo Atlas'))
-  .catch((err) => console.error('Error conectando a Mongo:', err))
+connectDB()
 
 app.use('/movies', moviesRouter)
 app.use('/directors', directorsRouter)
